@@ -23,7 +23,7 @@ export default function InputField({
       <View style={styles.flex}>
         {name}
         <TextInput
-          style={{ marginLeft: 5, flex: 1 }}
+          style={styles.input}
           placeholder={placeHolder}
           secureTextEntry={secure}
           onChangeText={onChange}
@@ -51,4 +51,7 @@ const styles = StyleSheet.create({
     padding: 8,
     justifyContent: "space-between",
   },
+  input: {
+    marginLeft: 5,
+  }
 });
