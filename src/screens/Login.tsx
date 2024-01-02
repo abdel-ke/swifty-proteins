@@ -26,6 +26,7 @@ const LoginScreen = ({navigation}: any) => {
         setPassword('');
         navigation.navigate('Home');
       }
+      
       // auth()
       //   .signInWithEmailAndPassword(
       //     email,
