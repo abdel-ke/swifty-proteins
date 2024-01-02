@@ -22,6 +22,8 @@ const LoginScreen = ({navigation}: any) => {
       const user = await auth().signInWithEmailAndPassword(email, password);
       // const user = true;
       if (user.user) {
+        setEmail('');
+        setPassword('');
         navigation.navigate('Home');
       }
       // auth()
