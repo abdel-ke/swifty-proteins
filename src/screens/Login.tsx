@@ -11,43 +11,38 @@ import InputField from '../components/InputField';
 import {useState} from 'react';
 import MyBotton from '../components/MyBotton';
 import Icon from '../components/Icons';
-import auth from '@react-native-firebase/auth';
+import auth,  {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import checkUser from '../auth/FireBaseAuth';
+import { showToaster } from '../functions/Toast';
 
 const LoginScreen = ({navigation}: any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const signIn = async () => {
+    const currentUser = auth().currentUser;
+    console.log(`userInfo: ${currentUser?.email}`);
+    if (currentUser) {
+        console.log('User exist');
+        // auth().signOut();
+      return;
+    }
     if (email && password) {
-      const user = await auth().signInWithEmailAndPassword(email, password);
-      // const user = true;
-      if (user.user) {
+      console.log('start');
+      const user: FirebaseAuthTypes.UserCredential | null = await checkUser({
+        email,
+        password,
+      });
+      console.log(`user: ${user}`);
+      if (user) {
         setEmail('');
         setPassword('');
         navigation.navigate('Home');
+      } else {
+        showToaster('User not found!');
       }
-      
-      // auth()
-      //   .signInWithEmailAndPassword(
-      //     email,
-      //     password,
-      //   )
-      //   .then(() => {
-      //     console.log('User account created & signed in!');
-      //     navigation.navigate('Home');
-      //   })
-      //   .catch(error => {
-      //     if (error.code === 'auth/email-already-in-use') {
-      //       console.log('That email address is already in use!');
-      //     }
-
-      //     if (error.code === 'auth/invalid-email') {
-      //       console.log('That email address is invalid!');
-      //     }
-      //     console.error(`error code: ${error.code}`);
-      //     console.error(error);
-      //   });
-    }
+    } else console.log(`email and pass: ${email} ${password}`);
+    console.log('second');
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -75,14 +70,17 @@ const LoginScreen = ({navigation}: any) => {
           flexDirection: 'row',
           justifyContent: 'space-between',
           marginTop: 20,
+          gap: 10,
         }}>
         <MyBotton width={'80%'} name="Login" color="purple" func={signIn} />
         <TouchableOpacity
+          onPress={() => console.log('Fingerprint button')}
           style={{
             backgroundColor: 'purple',
             borderRadius: 10,
             marginVertical: 30,
-            width: '19%',
+            // width: 70,
+            flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
           }}>

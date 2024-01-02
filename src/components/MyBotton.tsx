@@ -15,7 +15,8 @@ export default function MyBotton({name, color, width, func}: props){
       padding: 20,
       borderRadius: 10,
       marginVertical: 30,
-      width: width,
+      // width: width,
+      flex: 4,
     }}
   >
     <Text

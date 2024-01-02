@@ -19,8 +19,8 @@ export default function InputField({
   onChange,
 }: Props) {
   return (
-    <View style={[styles.container, styles.flex]}>
-      <View style={styles.flex}>
+    <View style={[styles.container]}>
+      {/* <View style={styles.flex}> */}
         {name}
         <TextInput
           style={styles.input}
@@ -29,7 +29,6 @@ export default function InputField({
           onChangeText={onChange}
           keyboardType={keyboardType}
         />
-      </View>
       <Text
         style={[
           { textAlignVertical: "bottom", color: "purple", fontWeight: "bold" },
@@ -37,21 +36,29 @@ export default function InputField({
       >
         {actionText}
       </Text>
+      {/* </View> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  flex: {
-    flexDirection: "row",
-    marginTop: 10,
-  },
+  // flex: {
+    // flexDirection: "row",
+    // marginTop: 10,
+    // backgroundColor: "red",
+    // flex: 1,
+  // },
   container: {
+    flexDirection: "row",
     borderBottomWidth: 1,
-    padding: 8,
+    padding: 5,
     justifyContent: "space-between",
+    alignItems: "center",
+    gap: 10,
   },
   input: {
-    marginLeft: 5,
+    flex: 1
+    // marginLeft: 5,
+    // backgroundColor: "purple",
   }
 });
