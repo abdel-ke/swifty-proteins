@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "267486001281",
+    "project_id": "swifty-proteins-ca8f6",
+    "storage_bucket": "swifty-proteins-ca8f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:267486001281:android:f795f5b4396dd5d3a03580",
+        "android_client_info": {
+          "package_name": "com.swifty_proteins"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "267486001281-9n27socfk5jfl8lv4em3hgskfcog9a9r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swifty_proteins",
+            "certificate_hash": "93caf258096bcbddc68f292843e6b9705282d2ee"
+          }
+        },
+        {
+          "client_id": "267486001281-0fthd6tcpt30fnh9h3puert0sioirfte.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYDNRD51dcRPzFK5rKjO_JjWDKg0NMgDE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "267486001281-0fthd6tcpt30fnh9h3puert0sioirfte.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

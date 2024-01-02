@@ -1,4 +1,3 @@
-
 import {
   Dimensions,
   SafeAreaView,
@@ -12,7 +11,7 @@ import InputField from '../components/InputField';
 import {useState} from 'react';
 import MyBotton from '../components/MyBotton';
 import Icon from '../components/Icons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import auth from '@react-native-firebase/auth';
 
 const LoginScreen = ({navigation}: any) => {
   const [email, setEmail] = useState('');
@@ -20,11 +19,31 @@ const LoginScreen = ({navigation}: any) => {
 
   const signIn = async () => {
     if (email && password) {
-      // const user = await SignInWithEmail(email, password);
-      const user = true;
-      if (user) {
+      const user = await auth().signInWithEmailAndPassword(email, password);
+      // const user = true;
+      if (user.user) {
         navigation.navigate('Home');
       }
+      // auth()
+      //   .signInWithEmailAndPassword(
+      //     email,
+      //     password,
+      //   )
+      //   .then(() => {
+      //     console.log('User account created & signed in!');
+      //     navigation.navigate('Home');
+      //   })
+      //   .catch(error => {
+      //     if (error.code === 'auth/email-already-in-use') {
+      //       console.log('That email address is already in use!');
+      //     }
+
+      //     if (error.code === 'auth/invalid-email') {
+      //       console.log('That email address is invalid!');
+      //     }
+      //     console.error(`error code: ${error.code}`);
+      //     console.error(error);
+      //   });
     }
   };
   return (
@@ -42,7 +61,7 @@ const LoginScreen = ({navigation}: any) => {
         keyboardType="email-address"
       />
       <InputField
-        name={<Icon size={22} name="lock-closed-outline" />}
+        name={<Icon size={22} name="lock" />}
         placeHolder="Password"
         actionText="Forgot?"
         onChange={setPassword}
@@ -58,17 +77,15 @@ const LoginScreen = ({navigation}: any) => {
         <TouchableOpacity
           style={{
             backgroundColor: 'purple',
-            padding: 20,
             borderRadius: 10,
             marginVertical: 30,
             width: '19%',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}>
-          <Icon size={22} color="white" name="finger-print-outline" />
+          <Icon size={42} color="white" name="fingerprint" />
         </TouchableOpacity>
       </View>
-      <Icon size={22} color="white" name="finger-print-outline" />
-      <Icon size={22} color="white" name="3iw" />
-      <Ionicons name="heart-outline" size={30} color="red" />
       <View
         style={[
           {
@@ -91,7 +108,6 @@ const LoginScreen = ({navigation}: any) => {
           Register
         </Text>
       </View>
-      <Icon name="3iw" size={30} color="purple" />
     </SafeAreaView>
   );
 };

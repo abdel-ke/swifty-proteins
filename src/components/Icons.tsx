@@ -2,25 +2,22 @@ import {PropsWithChildren} from 'react';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Ionicons from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 type iconsProps = PropsWithChildren<{
-  size: number;
+  size?: number;
   name: string;
   color?: string;
 }>;
 
 const Icon = ({name, size, color}: iconsProps) => {
   switch (name) {
-    case 'finger-print-outline':
+    case 'fingerprint':
       return <MaterialIcons name="fingerprint" size={size} color={color} />;
-    case 'lock-closed-outline':
+    case 'lock':
         return <FontAwesome name="lock" size={size} color={color} />;
     case 'at-sharp':
-        return <Ionicons name="heart" size={size} color={color} />;
-    case '3iw': 
-        // return <Ionicons.Button name="heart" size={size} color={color} />;
-        return <Ionicons name="heart" size={30} color="#000" />
+        return <Ionicons name="at-sharp" size={size} color={color} />;
     default:
         break;
   }
