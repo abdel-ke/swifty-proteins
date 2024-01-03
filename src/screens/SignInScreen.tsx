@@ -8,18 +8,28 @@ import {
 } from 'react-native';
 import LoginSVG from '../assets/SVG/LoginSVG';
 import InputField from '../components/InputField';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import MyBotton from '../components/MyBotton';
-import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {checkUser} from '../auth/FireBaseAuth';
 import {showToaster} from '../functions/Toast';
 import {Icon} from '@rneui/themed';
-import Biometric from '../functions/Biometric';
+import {isSupported, pressHandler} from '../functions/TouchId';
 
 const SignInScreen = ({navigation}: any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isBiometricSupported, setIsBiometricSupported] = useState(false);
+
+  useEffect(() => {
+    const checkBiometricSupport = async () => {
+      const biometryType = await isSupported();
+      setIsBiometricSupported(biometryType);
+    };
+
+    checkBiometricSupport();
+  }, []);
 
   const signIn = async () => {
     console.log('start');
@@ -39,9 +49,9 @@ const SignInScreen = ({navigation}: any) => {
         showToaster('User not found!', 'SHORT');
       }
     } else {
-      console.log(`email and pass: ${email} ${password}`)
+      console.log(`email and pass: ${email} ${password}`);
       showToaster('Please enter email and password!', 'SHORT');
-    };
+    }
     setLoading(false);
     console.log('second');
   };
@@ -87,22 +97,27 @@ const SignInScreen = ({navigation}: any) => {
             flex: 4,
           }}
         />
-        <TouchableOpacity
-          onPress={() => {
-            const currentUser = auth().currentUser;
-            console.log(`userInfo: ${currentUser?.email}`);
-            Biometric();
-          }}
-          style={{
-            backgroundColor: 'purple',
-            borderRadius: 10,
-            marginVertical: 30,
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Icon size={32} color="white" name="fingerprint" />
-        </TouchableOpacity>
+        {isBiometricSupported && (
+          <TouchableOpacity
+            onPress={async () => {
+              const handler = await pressHandler();
+              if (handler == true) {
+                navigation.navigate('Home');
+              } else {
+                showToaster('Authentication failed!', 'SHORT');
+              }
+            }}
+            style={{
+              backgroundColor: 'purple',
+              borderRadius: 10,
+              marginVertical: 30,
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Icon size={32} color="white" name="fingerprint" />
+          </TouchableOpacity>
+        )}
       </View>
       <View style={{flexDirection: 'row', gap: 5, justifyContent: 'center'}}>
         <Text>New to the app?</Text>
