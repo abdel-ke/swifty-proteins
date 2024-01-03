@@ -1,7 +1,7 @@
 import {ToastAndroid} from 'react-native';
 
-const showToaster = (msg: string) => {
-  ToastAndroid.show(msg, ToastAndroid.SHORT);
+const showToaster = (msg: string, time: 'SHORT' | 'LONG' | 'CENTER' | 'TOP' | 'BOTTOM') => {
+  ToastAndroid.show(msg, ToastAndroid[time]);
 };
 
 export {showToaster};

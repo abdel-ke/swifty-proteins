@@ -10,25 +10,21 @@ import LoginSVG from '../assets/SVG/LoginSVG';
 import InputField from '../components/InputField';
 import {useState} from 'react';
 import MyBotton from '../components/MyBotton';
-import Icon from '../components/Icons';
-import auth,  {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import checkUser from '../auth/FireBaseAuth';
-import { showToaster } from '../functions/Toast';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import {checkUser} from '../auth/FireBaseAuth';
+import {showToaster} from '../functions/Toast';
+import {Icon} from '@rneui/themed';
 
-const LoginScreen = ({navigation}: any) => {
+const SignInScreen = ({navigation}: any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const signIn = async () => {
-    const currentUser = auth().currentUser;
-    console.log(`userInfo: ${currentUser?.email}`);
-    if (currentUser) {
-        console.log('User exist');
-        // auth().signOut();
-      return;
-    }
+    console.log('start');
     if (email && password) {
-      console.log('start');
+      setLoading(true);
+      console.log('start 1.5');
       const user: FirebaseAuthTypes.UserCredential | null = await checkUser({
         email,
         password,
@@ -39,11 +35,13 @@ const LoginScreen = ({navigation}: any) => {
         setPassword('');
         navigation.navigate('Home');
       } else {
-        showToaster('User not found!');
+        showToaster('User not found!', 'SHORT');
       }
     } else console.log(`email and pass: ${email} ${password}`);
+    setLoading(false);
     console.log('second');
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{alignItems: 'center'}}>
@@ -53,13 +51,13 @@ const LoginScreen = ({navigation}: any) => {
         Login
       </Text>
       <InputField
-        name={<Icon size={22} name="at-sharp" />}
+        name={<Icon name="email" />}
         placeHolder="Email-ID"
         onChange={setEmail}
         keyboardType="email-address"
       />
       <InputField
-        name={<Icon size={22} name="lock" />}
+        name={<Icon name="lock" />}
         placeHolder="Password"
         actionText="Forgot?"
         onChange={setPassword}
@@ -72,40 +70,40 @@ const LoginScreen = ({navigation}: any) => {
           marginTop: 20,
           gap: 10,
         }}>
-        <MyBotton width={'80%'} name="Login" color="purple" func={signIn} />
+        <MyBotton
+          name="Login"
+          color="purple"
+          func={signIn}
+          loading={loading}
+          containerStyle={{
+            backgroundColor: 'purple',
+            padding: 8,
+            borderRadius: 10,
+            marginVertical: 30,
+            flex: 4,
+          }}
+        />
         <TouchableOpacity
-          onPress={() => console.log('Fingerprint button')}
+          onPress={() => {
+            const currentUser = auth().currentUser;
+            console.log(`userInfo: ${currentUser?.email}`);
+          }}
           style={{
             backgroundColor: 'purple',
             borderRadius: 10,
             marginVertical: 30,
-            // width: 70,
             flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <Icon size={42} color="white" name="fingerprint" />
+          <Icon size={32} color="white" name="fingerprint" />
         </TouchableOpacity>
       </View>
-      <View
-        style={[
-          {
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginTop: 20,
-          },
-        ]}>
-        <Text style={{textAlign: 'center'}}>New to the app?</Text>
+      <View style={{flexDirection: 'row', gap: 5, justifyContent: 'center'}}>
+        <Text>New to the app?</Text>
         <Text
-          style={[
-            {
-              textAlign: 'center',
-              color: 'purple',
-              marginLeft: 5,
-              fontWeight: 'bold',
-            },
-          ]}
-          onPress={() => console.log('Hello from Register')}>
+          style={{color: 'purple', fontWeight: 'bold'}}
+          onPress={() => navigation.navigate('SignIn')}>
           Register
         </Text>
       </View>
@@ -136,4 +134,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default SignInScreen;

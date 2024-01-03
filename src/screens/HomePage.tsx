@@ -1,7 +1,6 @@
 import {Button, SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import {useEffect, useState} from 'react';
-import LoginScreen from './Login';
+import auth from '@react-native-firebase/auth';
+import SignInScreen from './SignInScreen';
 
 const HomeScreen = ({navigation}: any) => {
 //   const [user, setUser] = useState<FirebaseAuthTypes.User | null>();
@@ -17,7 +16,7 @@ const HomeScreen = ({navigation}: any) => {
 
   if (!auth().currentUser) {
     console.log('user: Login: ');
-    return <LoginScreen />;
+    return <SignInScreen />;
   }
   else {
     console.log('user: Home: ');
@@ -29,7 +28,7 @@ const HomeScreen = ({navigation}: any) => {
               title="Logout"
               onPress={async () => {
                 await auth().signOut();
-                navigation.navigate('Login');
+                navigation.navigate('SignIn');
               }}
             />
             <Button
