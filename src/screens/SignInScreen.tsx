@@ -14,6 +14,7 @@ import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {checkUser} from '../auth/FireBaseAuth';
 import {showToaster} from '../functions/Toast';
 import {Icon} from '@rneui/themed';
+import Biometric from '../functions/Biometric';
 
 const SignInScreen = ({navigation}: any) => {
   const [email, setEmail] = useState('');
@@ -37,7 +38,10 @@ const SignInScreen = ({navigation}: any) => {
       } else {
         showToaster('User not found!', 'SHORT');
       }
-    } else console.log(`email and pass: ${email} ${password}`);
+    } else {
+      console.log(`email and pass: ${email} ${password}`)
+      showToaster('Please enter email and password!', 'SHORT');
+    };
     setLoading(false);
     console.log('second');
   };
@@ -59,7 +63,7 @@ const SignInScreen = ({navigation}: any) => {
       <InputField
         name={<Icon name="lock" />}
         placeHolder="Password"
-        actionText="Forgot?"
+        // actionText="Forgot?"
         onChange={setPassword}
         secure={true}
       />
@@ -87,6 +91,7 @@ const SignInScreen = ({navigation}: any) => {
           onPress={() => {
             const currentUser = auth().currentUser;
             console.log(`userInfo: ${currentUser?.email}`);
+            Biometric();
           }}
           style={{
             backgroundColor: 'purple',
@@ -103,7 +108,7 @@ const SignInScreen = ({navigation}: any) => {
         <Text>New to the app?</Text>
         <Text
           style={{color: 'purple', fontWeight: 'bold'}}
-          onPress={() => navigation.navigate('SignIn')}>
+          onPress={() => navigation.navigate('SignUp')}>
           Register
         </Text>
       </View>

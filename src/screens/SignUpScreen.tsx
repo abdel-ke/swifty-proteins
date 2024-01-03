@@ -19,7 +19,8 @@ const SignUpScreen = ({navigation}: any) => {
   const SignUp = async () => {
     if (email && password && confirmPass) {
       if (password !== confirmPass) {
-        showToaster('Password and Confirm Password are not same!', 'SHORT');
+        showToaster('Password and Confirm Password are not the same!', 'SHORT');
+        return ;
       }
       setLoading(true);
       console.log('start 1.5');
@@ -32,13 +33,11 @@ const SignUpScreen = ({navigation}: any) => {
         setEmail('');
         setPassword('');
         navigation.navigate('Home');
-      } else {
-        showToaster(
-          'The email address is already in use by another account.',
-          'TOP',
-        );
       }
-    } else console.log(`email and pass: ${email} ${password}`);
+    } else {
+      console.log(`email and pass: ${email} ${password}`)
+      showToaster('Please enter email and password!', 'SHORT');
+    };
     setLoading(false);
     console.log('second');
   };

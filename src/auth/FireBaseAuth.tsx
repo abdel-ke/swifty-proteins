@@ -1,4 +1,6 @@
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import {showToaster} from '../functions/Toast';
+import FireBaseErrors from '../functions/FireBaseErrors';
 
 type props = {
   email: string;
@@ -16,21 +18,7 @@ const checkUser = async ({
       return user;
     })
     .catch(error => {
-      if (error.code === 'auth/email-already-in-use') {
-        console.log('That email address is already in use!');
-      }
-
-      if (error.code === 'auth/invalid-email') {
-        console.log('That email address is invalid!');
-      }
-
-      if (error.code === 'auth/invalid-credential') {
-        console.log(
-          'The supplied auth credential is incorrect, malformed, or has expired.',
-        );
-      }
-      console.log(`error code: ${error.code}`);
-      console.log(error);
+      FireBaseErrors(error.code);
       return null;
     });
 };
@@ -46,40 +34,9 @@ const newUser = async ({
       return user;
     })
     .catch(error => {
-      if (error.code === 'auth/email-already-in-use') {
-        console.log('That email address is already in use!');
-      }
-
-      if (error.code === 'auth/invalid-email') {
-        console.log('That email address is invalid!');
-      }
-
-      if (error.code === 'auth/invalid-credential') {
-        console.log(
-          'The supplied auth credential is incorrect, malformed, or has expired.',
-        );
-      }
-      console.log(`error code: ${error.code}`);
-      console.log(error);
+      FireBaseErrors(error.code);
       return null;
     });
 };
-
-//   try {
-//     console.log('start 2');
-//     const userv = await auth().signInWithEmailAndPassword(email, password);
-//     console.log('start 3', userv);
-//     return userv;
-//   } catch (error) {
-//     if (error.code === 'auth/email-already-in-use') {
-//       console.log('That email address is already in use!');
-//     }
-
-//     if (error.code === 'auth/invalid-email') {
-//       console.log('That email address is invalid!');
-//     }
-//     console.error(`error code: ${error.code}`);
-//     console.error(error);
-//   }
 
 export {checkUser, newUser};
